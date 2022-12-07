@@ -1,0 +1,37 @@
+
+  @import url('https://fonts.googleapis.com/css2?family=Nerko+One&display=swap'); 
+.boot-nav{
+    color: white;
+    background-color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.boot-nav h2{
+    color: white;
+    font-family: 'Nerko One', 'cursive';
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+.boot-nav form{
+    display: flex;
+    background-color: white;
+    padding: 0.1rem 0.8rem;
+    border-radius: 15px ;
+    box-shadow: 0 0 10px white ;
+}
+
+.nav-input{
+    border: none;
+}
+ 
+form button{
+    background-color: white;
+    border: none;
+}
+.fa-magnifying-glass-location{
+    font-size: 1.5rem;
+}

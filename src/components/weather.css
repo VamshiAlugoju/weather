@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+ .weather-box{
+    width: 700px;
+    height: 400px;
+    background-color: white;
+    margin: 0 auto;
+    border: none;
+    border-radius: 5px;
+
+ }
+  .half{
+   width: 50%;
+  }
+ .temp{
+   
+    border: 2px solid black;
+    align-items: center;
+ }
+ 
+ .temp-box{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 20px 20px 10px 20px;
+ }
+ .temp-icon{
+   font-size: 5rem;
+   color: black;
+ }
+
+ .temperature{
+   font-size: 5rem;
+   font-family: 'Work Sans', sans-serif;
+   color: black;
+   margin-left: 0.5rem;
+ }
+
+ .celsius{
+   font-size: 1rem;
+ }
+
+ .first-row{
+   display: flex;
+   justify-content: space-between;
+ }
+
+ .address{
+   padding-right: 1rem;
+ }
+
+ .second-row{
+   display: flex;
+    width: 100%;
+    padding: 0 1rem;
+ }
+ 
+ .humidity{
+   display: flex;
+ }
+.wind{
+   display: flex;
+}
