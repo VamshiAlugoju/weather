@@ -60,3 +60,22 @@
 .wind{
    display: flex;
 }
+
+.humid-val{
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.humid-box{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.humid-box p{
+   margin: 0 0 0 0.8rem;
+}
+.humid-box span i{
+  margin: 0 0 0 0.5rem;
+  font-size: 2rem;
+}
