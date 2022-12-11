@@ -9,11 +9,11 @@ export default function Weather() {
   const [city, setcity] = React.useState("mumbai");
   // const [data, setdata] = React.useState({});
   // const [weatherdata, setweatherdata] = React.useState({});
-//  let a = React.useRef(1);
+   
 
   const [realdata,setrealdata] = React.useState( {alldata:  {
     city:{ name:""},
-    temperature:0,
+    temperature:"",
   humidity:"",
   wind:"",
   feels_like:"",
@@ -21,9 +21,8 @@ export default function Weather() {
   pressure:"",
   weather_text:"",
   weatherIcon:""
-  }})
+  }}) 
  
-
 
   async function waitfordata() {
     const urldata = await fetch(
@@ -31,7 +30,6 @@ export default function Weather() {
       );
     const objectdata = await urldata.json();
     let citykey = objectdata[0].Key
-    // setdata(objectdata)
       
     
     const tempurl = await fetch(
@@ -39,7 +37,6 @@ export default function Weather() {
     );
     const objecttemp = await tempurl.json();
  
-    // setweatherdata(objecttemp)
 
     setrealdata((prev)=>({
        
@@ -56,44 +53,26 @@ export default function Weather() {
        weatherIcon:objecttemp[0].WeatherIcon
       }
    }))
-    // console.log(realdata)
-    // console.log(weatherdata)
-    // console.log( data)
-    // console.log(objecttemp[0])
-  
+   
   }
-  console.log(realdata)
+   
+  function handelcityname(cityname)
+  { 
+    setcity(cityname)
+  }
    
 
   React.useEffect(() => {
     waitfordata();
-  }, []);
+  }, [city]);
  
  
-  //  console.log((a.current)++)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   return (
     <>
       <div className="Page">
-        <Navbar />
+        <Navbar cityname = {city} onClick={handelcityname} />
         <div className="weather-box">
-          <h4>weather in  {realdata.alldata.city.name}</h4>
+          <h4 className="citynameh4">weather in  <span className="values" > mumbai {realdata.alldata.city.name} </span></h4>
           <div className="first-row">
             <div className="temp half d-flex">
               <div className="temp-box">
@@ -104,7 +83,7 @@ export default function Weather() {
                 <p>temperature</p>
               </div>
               <span className="temperature">
-                 {realdata.alldata.temperature} <span className="celsius">&#8451;</span>{" "}
+                 {realdata.alldata.temperature} 50 <span className="celsius">&#8451;</span>{" "}
               </span>
             </div>
             <div className="address">
@@ -121,19 +100,19 @@ export default function Weather() {
                   {" "}
                   <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>Feels-like</p>
+                <p>Feels-like  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.feels_like}</span>
+              <span className="humid-val"> <span className="values">55{realdata.alldata.feels_like} </span> </span>
             </div>
-            <div className=" wind">
+            <div className=" wind half">
               <div className="humid-box">
                 <span>
                   {" "}
                   <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>wind-speed</p>
+                <p>wind-speed  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.wind}</span>
+              <span className="humid-val"><span className="values"> 55{realdata.alldata.wind}</span> </span>
             </div>
           </div>
 
@@ -146,19 +125,19 @@ export default function Weather() {
                   {" "}
                   <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>humidity</p>
+                <p>humidity  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.humidity}</span>
+              <span className="humid-val"> <span className="values">55{realdata.alldata.humidity}</span> </span>
             </div>
-            <div className=" wind">
+            <div className=" wind half">
               <div className="humid-box">
                 <span>
                   {" "}
                   <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>precipitation</p>
+                <p>precipitation  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.precipitation}</span>
+              <span className="humid-val"> <span className="values">55{realdata.alldata.precipitation}</span></span>
             </div>
           </div>
          
@@ -170,21 +149,23 @@ export default function Weather() {
                   {" "}
                   <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>Pressure</p>
+                <p>Pressure  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.pressure}</span>
+              <span className="humid-val"><span className="values"> 55{realdata.alldata.pressure}</span></span>
             </div>
-            <div className=" wind">
+            <div className=" wind half">
               <div className="humid-box">
                 <span>
                   {" "}
                   <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
                 </span>
-                <p>wind-speed</p>
+                <p>wind-speed  :</p>
               </div>
-              <span className="humid-val">{realdata.alldata.wind}</span>
+              <span className="humid-val"> <span className="values">55{realdata.alldata.wind}</span></span>
             </div>
           </div>
+
+
         </div>
       </div>
     </>

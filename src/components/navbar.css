@@ -8,7 +8,7 @@
     padding: 1.5rem 1rem;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-}
+}  
 .boot-nav h2{
     color: white;
     font-family: 'Nerko One', 'cursive';
@@ -26,6 +26,7 @@
 
 .nav-input{
     border: none;
+    outline: none;
 }
  
 form button{
