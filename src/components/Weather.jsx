@@ -1,67 +1,102 @@
-import React from "react";
+import React ,{useState} from  "react";
 import "./weather.css";
-// import CountryBox from "./CountryBox"
 import Navbar from "./Navbar";
+import DataBlock from "../../blocks/DataBlock";
+import MainBox from "../../blocks/MainBox";
+import {CircleLoader} from "react-spinners"
+import { UilCelsius } from '@iconscout/react-unicons'
+import { UilWind } from '@iconscout/react-unicons'
+import { UilWater } from '@iconscout/react-unicons'
+import { UilCompressArrows } from '@iconscout/react-unicons'
+import { UilTemperaturePlus } from '@iconscout/react-unicons'
+import { UilCloudDrizzle } from '@iconscout/react-unicons'
+import { useBackdrop } from "use-backdrop";
+
 
 // make an oject for setdata and weather data
 export default function Weather() {
+  
   const [city, setcity] = React.useState( {
     name:"mumbai",
-    state:"",
-    country:"",
-    gmt:""
   });
+   const {displayBackdrop,closeBackdrop} = useBackdrop()
+
+  const [isLoading , setisLoading] = useState(false)
    
   const [realdata, setrealdata] = React.useState({
     alldata: {
-      city: { name: "" },
+      city: { name: "",state:"",country:"", gmt:"" },
       temperature: "",
       humidity: "",
       wind: "",
       feels_like: "",
       precipitation: "",
       pressure: "",
-      weather_text: "",
-      weatherIcon: "",
+      
     },
   });
 
   async function waitfordata() {
-   
-    const urldata = await fetch(
-      `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&q=${city.name}&details=true`
-    );
-    const objectdata = await urldata.json();
      
-  
+    setisLoading(true)
+     
+    let objectdata;
+    
+     try{
+       let urldata = await fetch(
+        `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&q=${city.name}&details=true`
+         );
+         objectdata = await urldata.json();
+         if(objectdata.length === 0 ){
+          setisLoading(false)
+          handleClick();
+          console.log(objectdata.length)
+          throw new Error("bad place ")
+        }
+         console.log(objectdata)
+     }catch(err){
+        console.log(err)
+     };
     let citykey = objectdata[0].Key;
 
-    const tempurl = await fetch(
-      `https://dataservice.accuweather.com/currentconditions/v1/${citykey}?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&details=true`
-    );
-    const objecttemp = await tempurl.json();
+     console.log(citykey)
+      console.log(objectdata)
     
+    let tempurl;
+    let objecttemp;
+      
+    try{
+      tempurl = await fetch(
+      `https://dataservice.accuweather.com/currentconditions/v1/${citykey}?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&details=true`
+      );
+      objecttemp = await tempurl.json()
+    }catch(err){
+        console.log(err)
+    }
+     console.log(objecttemp)
     setrealdata((prev) => ({
       alldata: {
         ...prev.alldata,
-        city: { ...prev.alldata.city, name: objectdata[0].EnglishName },
+        city: { ...prev.alldata.city,
+           name: objectdata[0].EnglishName,
+            state:objectdata[0].AdministrativeArea.EnglishName,
+            country:objectdata[0].Country.EnglishName,
+            gmt:objectdata[0].TimeZone.GmtOffset
+           },
         temperature: objecttemp[0].Temperature.Metric.Value,
         humidity: objecttemp[0].RelativeHumidity,
         wind: objecttemp[0].Wind.Speed.Metric.Value,
         feels_like: objecttemp[0].RealFeelTemperature.Metric.Value,
-        precipitation:
-          objecttemp[0].PrecipitationSummary.Precipitation.Metric.Value,
+        precipitation: objecttemp[0].PrecipitationSummary.Precipitation.Metric.Value,
         pressure: objecttemp[0].Pressure.Imperial.Value,
         weather_text: objecttemp[0].WeatherText,
         weatherIcon: objecttemp[0].WeatherIcon,
       },
     }));
-
-   
+     setisLoading(false)
   }
   
   function handelcityname(cityname) {
-     
     setcity(prev=>{
      return { ...prev,
               name:cityname
@@ -73,140 +108,61 @@ export default function Weather() {
     waitfordata();
   }, [city]);
 
+
+  let tempicon =   <UilTemperaturePlus size="50" color="#00E4D5" />;
+  let water =   <UilWater size="50" color="#00E4D5" />;
+  let wind =   <UilWind size="50" color="#00E4D5" />;
+  let pressure =   <UilCompressArrows size="50" color="#00E4D5" />;
+  let prec = <UilCloudDrizzle size="50" color="#00E4D5" />;
+
+  const handleClick = () => displayBackdrop((closeBackdrop) => (
+    <div className="backdrop" onClick={closeBackdrop} >
+      <div>
+        <h4>please enter a valid city</h4>
+        <p>(try checking spelling)</p>
+      </div>
+      <button onClick={closeBackdrop}>
+        Ok
+      </button>
+    </div>
+  ));
+
   return (
-    <>
-      <div className="Page">
+       
+    <div>    
+       <div className="Page">
         <Navbar cityname={city} onClick={handelcityname} />
         <div className="weather-box">
-          <h4 className="citynameh4">
-            weather in{" "}
-            <span className="values"> {realdata.alldata.city.name} </span>
-          </h4>
-          <div className="first-row">
-            <div className="temp half d-flex">
-              <div className="temp-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid temp-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>temperature</p>
-              </div>
-              <span className="temperature">
-                <span> {realdata.alldata.temperature} </span>{" "}
-                <span className="celsius">&#8451;</span>
-              </span>
+          <MainBox
+           temperature={realdata.alldata.temperature}
+           name={realdata.alldata.city.name}
+           state={realdata.alldata.city.state}
+           country={realdata.alldata.city.country}
+           gmt={realdata.alldata.city.gmt}
+           />
+              
+          {isLoading ? 
+          <div className="circleLoader">
+           <CircleLoader
+         color="#8f00ff"
+          size={150}
+          speedMultiplier={1}
+         /> </div>
+             : 
+             <div className="grid">
+             <DataBlock icon={wind} property="wind" Value={realdata.alldata.wind} />
+             <DataBlock icon={tempicon} property="Feels-Like" Value={realdata.alldata.feels_like} />
+             <DataBlock icon={water} property="humidity" Value={realdata.alldata.humidity} />
+             <DataBlock icon={prec} property="precipitation" Value={realdata.alldata.precipitation} />
+             <DataBlock icon={pressure} property="pressure" Value={realdata.alldata.pressure} />
             </div>
-            <div className="address">
-               <h3 > {city.name} ,</h3>
-               <div className="address-country">
-                  {city.state} , {city.country}
-               </div>
-               <p > Gmt: {city.gmt} Ist</p>
+           }
 
-            </div>
-          </div>
-
-          {/* second rwo */}
-          <div className="second-row">
-            <div className="humidity  half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>Feels-like :</p>
-              </div>
-              <span className="humid-val">
-                {" "}
-                <span className="values">
-                  {" "}
-                  {realdata.alldata.feels_like}{" "}
-                </span>{" "}
-                <span style={{ color: "black" }} className="">
-                  &#8451;
-                </span>{" "}
-              </span>
-            </div>
-            <div className=" wind half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>wind-speed :</p>
-              </div>
-              <span className="humid-val">
-                <span className="values"> {realdata.alldata.wind}</span><span style={{color:"black"}} className="windspeed"> km/h</span>
-              </span>
-            </div>
-          </div>
-
-          {/* third row  */}
-          <div className="second-row">
-            <div className="humidity  half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>humidity :</p>
-              </div>
-              <span className="humid-val">
-                {" "}
-                <span className="values">
-                  {" "}
-                  {realdata.alldata.humidity} %
-                </span>{" "}
-              </span>
-            </div>
-            <div className=" wind half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>precipitation :</p>
-              </div>
-              <span className="humid-val">
-                {" "}
-                <span className="values">
-                  {" "}
-                  {realdata.alldata.precipitation}  <small>mm</small>
-                </span>
-              </span>
-            </div>
-          </div>
-
-          {/* Fourth row  */}
-          <div className="second-row">
-            <div className="humidity  half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid humid-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>Pressure :</p>
-              </div>
-              <span className="humid-val">
-                <span className="values"> {realdata.alldata.pressure} hg</span>
-              </span>
-            </div>
-            <div className=" wind half">
-              <div className="humid-box">
-                <span>
-                  {" "}
-                  <i class="fa-solid wind-icon fa-temperature-three-quarters"></i>
-                </span>
-                <p>wind-speed :</p>
-              </div>
-              <span className="humid-val">
-                {" "}
-                <span className="values"> {realdata.alldata.wind}</span>
-              </span>
-            </div>
-          </div>
         </div>
+      
       </div>
-    </>
+
+       </div>
+    
   );
 }

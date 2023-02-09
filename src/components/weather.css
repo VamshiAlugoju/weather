@@ -5,123 +5,61 @@
     background-color: white;
     margin: 0 auto;
     border: none;
-    border-radius: 5px;
-    padding: 0 0  1rem 0;
+    border-radius: 20px;
+    padding: 1rem 0  1rem 0;
     text-transform: capitalize;
     box-shadow: 0 0 10px  rgb(255, 255, 255);
     font-family: 'Noto Sans JP', sans-serif;
     font-size: 1.3rem;
     font-weight: 400;
+    min-height: 500px;
     color: rgba(0, 0, 0, 0.521);
-
- }
-
- .values{
-  color: rgb(0, 0, 0);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.295);
- }
-  .half{
-   width: 50%;
-   height: fit-content;
-  }
- .temp{
-   
-    /* border: 2px solid black; */
-    align-items: center;
  }
  
- .citynameh4{
-  text-align: center;
-  padding: 0.5rem 0;
- }
- .temp-box{
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   padding: 20px 20px 10px 20px;
- }
- .temp-icon{
-   font-size: 5rem;
-   color: black;
- }
+/*  css for grid layout */
 
- .temperature{
-  display: flex;
+.grid{
+  padding: 0 1rem;
+  display: grid;
+   grid-template-columns: 50% 50%;
+   column-gap:0.2rem;
+    row-gap:1rem;
+   width: 100%;
+}
+
+ .circleLoader{
   width: 100%;
-  height: 100%;
-   font-family: 'Work Sans', sans-serif;
-   color: black;
-   margin-left: 0.5rem;
-   align-items:  center;
- }
- .temperature span:first-child{
-     font-size :4.5rem; ;
- }
- .celsius{
-   font-size: 1.7rem;
-   position: relative;
-    bottom: 2rem;
-    right: 0.5rem;
- }
-
- .first-row{
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
- }
-
- .address{
-  width:50%;
-   
-   padding-left: 1rem;
-   display: flex;
-   flex-direction: column;
-   justify-content: flex-start;
- }
- .address h3{
-  margin: 0;
-   color: black;
- }
- .address-country{
-  font-size: 0.9rem;
- }
- .address p{
-  font-size: 0.9rem;
- }
-
- .second-row{
-   display: flex;
-    width: 100%;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid rgba(117, 117, 117, 0.336);
- }
- 
- .humidity{
-   display: flex;
- }
-.wind{
-   display: flex;
-}
-
-.humid-val{
   display: flex;
-   margin:  0 auto 0  1rem;
-  align-items: center;
-}
-
-.humid-box{
-  display: flex;
-  align-items: center;
   justify-content: center;
-}
-.humid-box p{
-   margin: 0 0 0 0.8rem;
-}
-.humid-box span i{
-  margin: 0 0 0 0.5rem;
-  font-size: 2rem;
+ }
+
+ .backdrop{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+     text-align: center;
+     background-color: rgb(179, 156, 156);
+     border-radius: 3rem;
+     padding: 3rem 5rem;
+     text-transform: capitalize;
+     color: black;
+     transition: 0.5s ease-in-out;
+ }
+ .backdrop:hover{
+    
+  background-color: rgba(0, 255, 255, 0.992);
 }
 
-.fa-solid{
-  color: black;
+ .backdrop button{
+    width: 5rem;
+    height:  3rem;
+    border: none;
+    background-color: rgb(84, 217, 215);
+    border-radius: 2rem;
+    transition: 0.5s;
+    border: 1px solid black;
+ }
+ .backdrop button:hover{
+  background-color: rgb(2, 248, 244);
 }

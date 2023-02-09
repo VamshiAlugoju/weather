@@ -28,7 +28,7 @@ function Navbar(props)
          
           <form className="d-flex" role="search">
             <input name="citysearch" onChange={handleChange} value={cityname} className="form-control me-2 nav-input" type="search" placeholder="Eg:hyderabad,mumbai,etc" aria-label="Search" />
-            <button onClick={submitted} type="submit">  <i class="fa-solid fa-magnifying-glass-location"></i>
+            <button onClick={submitted} type="submit">  <i className="fa-solid fa-magnifying-glass-location"></i>
            </button>
           </form>
            

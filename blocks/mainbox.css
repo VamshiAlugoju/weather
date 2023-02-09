@@ -1,0 +1,68 @@
+
+
+.mainbox{
+    /* font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400; */
+    width: 95%;
+    background-color: white;
+    display: flex;
+    /* justify-content: space-evenly; */
+     border-radius:30px;
+      padding: 0 1rem;
+      align-items: center;
+      text-transform: capitalize;
+     height: 8rem;
+      /* border: 1px solid rgb(0, 0, 0); */
+      box-shadow: 2px 2px 5px rgb(216, 185, 185) ;
+      transition: 1s;
+      margin: 1rem auto;
+}
+.mainbox:hover{
+    box-shadow: 0 0 10px rgba(0, 242, 255, 0.322);
+}
+.logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 900;
+    font-size: 1.2rem;
+}
+.temperature{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%; 
+    padding-left: 1rem;
+    gap: 3rem;
+}
+.temp-value{
+   font-size: 3rem;
+   color: black;
+   font-weight: 500;
+}
+.celsius{
+    font-size: 1.5rem;
+    position: relative;
+     bottom: 1.7rem;
+     right: 0.5rem;
+     font-weight: 500;
+  }
+.address{
+    width:50%;
+     
+     padding-left: 1rem;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-start;
+   }
+   .address h3{
+    margin: 0;
+     color: black;
+   }
+   .address-country{
+    font-size: 0.9rem;
+   }
+   .address p{
+    font-size: 0.9rem;
+   }
