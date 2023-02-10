@@ -55,13 +55,10 @@ export default function Weather() {
         }
          console.log(objectdata)
      }catch(err){
-        console.log(err)
+        console.log( "erroe is ", err)
      };
     let citykey = objectdata[0].Key;
-
-     console.log(citykey)
-      console.log(objectdata)
-    
+ 
     let tempurl;
     let objecttemp;
       
@@ -70,8 +67,12 @@ export default function Weather() {
       `https://dataservice.accuweather.com/currentconditions/v1/${citykey}?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&details=true`
       );
       objecttemp = await tempurl.json()
+      console.log(objecttemp)
     }catch(err){
-        console.log(err)
+      let error = new Error("api calls limit is over for today please try again tomarrow")
+      handleClick(error)
+      throw error;
+        console.log( "error is " , err)
     }
      console.log(objecttemp)
     setrealdata((prev) => ({
@@ -115,11 +116,13 @@ export default function Weather() {
   let pressure =   <UilCompressArrows size="50" color="#00E4D5" />;
   let prec = <UilCloudDrizzle size="50" color="#00E4D5" />;
 
-  const handleClick = () => displayBackdrop((closeBackdrop) => (
+   
+  let errormsg= "api calls limit is over for today please try again tomarrow";
+  const handleClick = (error) => displayBackdrop((closeBackdrop) => (
     <div className="backdrop" onClick={closeBackdrop} >
       <div>
-        <h4>please enter a valid city</h4>
-        <p>(try checking spelling)</p>
+        <h4> {error ? errormsg : "please enter a valid city" } </h4>
+      { !error ??  <p>(try checking spelling)</p>}
       </div>
       <button onClick={closeBackdrop}>
         Ok
