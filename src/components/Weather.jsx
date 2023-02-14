@@ -44,7 +44,7 @@ export default function Weather() {
     
      try{
        let urldata = await fetch(
-        `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&q=${city.name}&details=true`
+        `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=YTThiHmg9UFHxGpMGd8zYZpiXwGWnHsj&q=${city.name}&details=true`
          );
          objectdata = await urldata.json();
          if(objectdata.length === 0 ){
